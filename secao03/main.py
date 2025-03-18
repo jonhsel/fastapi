@@ -1,3 +1,5 @@
+from models import Curso
+
 from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import status
@@ -34,6 +36,14 @@ async def get_curso(curso_id: int):
             status_code=status.HTTP_404_NOT_FOUND, detail="Curso não encontrado!"
         )
 
+@app.post('/cursos')
+async def post_cursos(curso = Curso):
+    if curso.id not in cursos:
+        cursos[curso.id] = curso
+        return curso
+    else:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"Já existe um curso com ID {curso.id}")
+    
 
 
 
