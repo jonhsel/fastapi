@@ -30,7 +30,7 @@ async def get_cursos():
 async def get_curso(curso_id: int):
     try:
         curso = cursos[curso_id]
-        curso.update({"id": curso_id})
+       # curso.update({"id": curso_id})
 
         return curso
     except KeyError:
