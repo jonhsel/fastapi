@@ -52,7 +52,7 @@ async def post_curso(curso: Curso):
     del curso.id
     return  curso
     
-@app.put('/cursos')
+@app.put('/cursos/{curso_id}')
 async def put_curso(curso_id: int, curso: Curso):
     if curso_id in cursos:
         cursos[curso_id] = curso
