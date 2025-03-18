@@ -4,6 +4,8 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import status
 
+from typing import List, Optional
+
 app = FastAPI()
 
 cursos = {
@@ -37,7 +39,8 @@ async def get_curso(curso_id: int):
         )
 
 @app.post('/cursos')
-async def post_cursos(curso = Curso):
+#async def post_curso(curso: Optional[Curso]=None):
+async def post_curso(curso: Curso):
     if curso.id not in cursos:
         cursos[curso.id] = curso
         return curso
