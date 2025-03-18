@@ -60,6 +60,15 @@ async def put_curso(curso_id: int, curso: Curso):
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                             detail=f"Não existe um curso com esse {curso_id}.")
+    
+@app.delete('/cursos/{curso_id}', status_code= status.HTTP_204_NO_CONTENT)
+async def delete_curso(curso_id: int):
+    if curso_id in cursos:
+        del cursos[curso_id]
+        return {"msg": "Curso deletado com sucesso!"}
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Curso de {curso_id} não encontrado!')
+
 
 
 if __name__ == '__main__':
