@@ -6,6 +6,9 @@ from fastapi import status
 
 from typing import List, Optional
 
+from fastapi import Response
+from fastapi import Path
+
 app = FastAPI()
 
 cursos = {
@@ -26,8 +29,10 @@ async def get_cursos():
     return cursos
 
 @app.get('/cursos/{curso_id}')
+
 #async def get_curso(curso_id):
-async def get_curso(curso_id: int):
+#isnerção de path parametres
+async def get_curso(curso_id: int = Path(default=None, title="ID do Curso", description="Deve ser entre 2 e 5", gt=1, lt=6)):
     try:
         curso = cursos[curso_id]
        # curso.update({"id": curso_id})
@@ -61,11 +66,11 @@ async def put_curso(curso_id: int, curso: Curso):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                             detail=f"Não existe um curso com esse {curso_id}.")
     
-@app.delete('/cursos/{curso_id}', status_code= status.HTTP_204_NO_CONTENT)
+@app.delete('/cursos/{curso_id}')
 async def delete_curso(curso_id: int):
     if curso_id in cursos:
         del cursos[curso_id]
-        return {"msg": "Curso deletado com sucesso!"}
+        return Response(status_code= status.HTTP_204_NO_CONTENT)
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Curso de {curso_id} não encontrado!')
 
