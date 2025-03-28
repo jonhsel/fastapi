@@ -38,7 +38,7 @@ async def get_cursos(db: AsyncSession = Depends(get_session)):
 
 #GET curso 
 @router.get('/{curso_id}', response_model=CursoSchema, status_code=status.HTTP_200_OK)
-async def get_curso(curso_id: int, db: AsyncSession = Depends(get_session))
+async def get_curso(curso_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(CursoModel).filter(CursoModel.id == curso_id)
         result = await session.execute(query)
@@ -73,7 +73,7 @@ async def put_curso(curso_id: int, curso: CursoSchema, db: AsyncSession = Depend
 async def delete_curso(curso_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(CursoModel).filter(CursoModel.id == curso_id)
-        result = await.session.execute(query)
+        result = await session.execute(query)
         curso_del = result.scalars_one_or_none()
 
         # Verifica se o curso existe
